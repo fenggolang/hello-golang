@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"os"
 )
 
 type ContentData struct {
@@ -12,8 +11,6 @@ type ContentData struct {
 }
 
 func main() {
-	pwd, _ := os.Getwd()
-	fmt.Printf("当前路径:%v\n", pwd)
 	tmpl := template.Must(template.ParseFiles("./index.html"))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := ContentData{
