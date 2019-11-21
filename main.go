@@ -22,11 +22,16 @@ func main() {
 	}
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := ContentData{
-			Content: "Hello Golang",
+			Content: "Hello Golang 8080",
 		}
 		tmpl.Execute(w, data)
 	})
 
 	fmt.Printf("http server start success!")
+	http.HandleFunc("/health", health)
 	http.ListenAndServe(":8080", nil)
+}
+
+func health(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("OK"))
 }
