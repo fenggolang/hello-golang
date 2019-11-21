@@ -20,6 +20,7 @@ func main() {
 	} else {
 		tmpl = template.Must(template.ParseFiles("./hello-golang/index.html"))
 	}
+	http.HandleFunc("/health", health)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := ContentData{
 			Content: "Hello Golang 8080",
@@ -28,7 +29,6 @@ func main() {
 	})
 
 	fmt.Printf("http server start success!")
-	http.HandleFunc("/health", health)
 	http.ListenAndServe(":8080", nil)
 }
 
