@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -12,7 +13,12 @@ type ContentData struct {
 	Content string
 }
 
+var (
+	port = flag.String("port", "8080", "-p 8080")
+)
+
 func main() {
+	flag.Parse()
 	dir, _ := os.Getwd()
 	var tmpl *template.Template
 	if strings.Contains(dir, "hello-golang") {
@@ -23,13 +29,13 @@ func main() {
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := ContentData{
-			Content: "Hello Golang 8080",
+			Content: "Hello Golang " + *port,
 		}
 		tmpl.Execute(w, data)
 	})
 
 	fmt.Printf("http server start success!")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":"+*port, nil)
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
