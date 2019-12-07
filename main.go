@@ -27,6 +27,8 @@ func main() {
 		tmpl = template.Must(template.ParseFiles("./hello-golang/index.html"))
 	}
 	http.HandleFunc("/health", health)
+	http.HandleFunc("/ping", ping)
+	http.HandleFunc("/api/v1/version", version)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := ContentData{
 			Content: "Hello Golang " + *port,
@@ -39,5 +41,13 @@ func main() {
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("OK"))
+	w.Write([]byte("ok"))
 }
+func ping(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("pong"))
+}
+
+func version(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("4.10"))
+}
+
