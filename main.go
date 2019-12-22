@@ -21,6 +21,7 @@ func main() {
 	flag.Parse()
 	dir, _ := os.Getwd()
 	var tmpl *template.Template
+	fmt.Println("当前目录是:", dir)
 	if strings.Contains(dir, "hello-golang") { // 本地
 		tmpl = template.Must(template.ParseFiles("./index.html"))
 	} else if strings.Contains(dir, "app-root") { // golang源码发布，默认路径是/opt/app-root/src
