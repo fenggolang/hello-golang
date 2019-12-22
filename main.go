@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"os"
-	"strings"
 )
 
 type ContentData struct {
@@ -19,13 +17,8 @@ var (
 
 func main() {
 	flag.Parse()
-	dir, _ := os.Getwd()
 	var tmpl *template.Template
-	if strings.Contains(dir, "hello-golang") {
-		tmpl = template.Must(template.ParseFiles("./index.html"))
-	} else {
-		tmpl = template.Must(template.ParseFiles("./hello-golang/index.html"))
-	}
+	tmpl = template.Must(template.ParseFiles("./index.html"))
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/ping", ping)
 	http.HandleFunc("/api/v1/version", version)
@@ -50,4 +43,3 @@ func ping(w http.ResponseWriter, r *http.Request) {
 func version(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("4.10"))
 }
-
