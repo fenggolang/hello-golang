@@ -21,10 +21,12 @@ func main() {
 	flag.Parse()
 	dir, _ := os.Getwd()
 	var tmpl *template.Template
-	if strings.Contains(dir, "hello-golang") || strings.Contains(dir, "opt") {
+	if strings.Contains(dir, "hello-golang") { // 本地
 		tmpl = template.Must(template.ParseFiles("./index.html"))
-	} else {
+	} else if strings.Contains(dir, "app-root") { // golang源码发布，默认路径是/opt/app-root/src
 		tmpl = template.Must(template.ParseFiles("./hello-golang/index.html"))
+	} else { // golang介质包发布，默认路径是/opt
+		tmpl = template.Must(template.ParseFiles("./index.html"))
 	}
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/ping", ping)
