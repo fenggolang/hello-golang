@@ -10,5 +10,5 @@ RUN go build -o $GOPATH/bin/main main.go
 EXPOSE 8080
 
 WORKDIR $GOPATH
-RUN cp /opt/src/index.html /opt/
+RUN cp /go/src/index.html /go/
 CMD bin/main
