@@ -1,0 +1,15 @@
+stages:
+- name: compile
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: hello-golang
+      pushRemote: true
+      registry: harbor.ccsyun-wpc.club
+  when:
+    event:
+      include:
+      - push
+timeout: 60
+notification: {}
