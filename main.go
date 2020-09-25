@@ -39,8 +39,20 @@ func main() {
 		tmpl.Execute(w, data)
 	})
 
-	fmt.Printf("http server start success!")
-	http.ListenAndServe(":"+*port, nil)
+	fmt.Printf("http server start success!\n")
+
+	go func() {
+		fmt.Println("监听8080端口")
+		http.ListenAndServe(":"+*port, nil)
+	}()
+	go func() {
+		fmt.Println("监听8081端口")
+		metricsMux := http.NewServeMux()
+		metricsMux.HandleFunc("/metrics", health)
+		http.ListenAndServe("0.0.0.0:8081", metricsMux)
+	}()
+
+	select {}
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
