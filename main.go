@@ -14,7 +14,7 @@ type ContentData struct {
 }
 
 var (
-	port = flag.String("port", "8080", "-p 8080")
+	port = flag.String("p", "8080", "-p 8080")
 )
 
 func main() {
@@ -42,16 +42,17 @@ func main() {
 	fmt.Printf("http server start success!\n")
 
 	go func() {
-		fmt.Println("监听8080端口")
+		fmt.Printf("监听%v端口", *port)
 		http.ListenAndServe(":"+*port, nil)
 	}()
-	go func() {
-		fmt.Println("监听8081端口")
-		metricsMux := http.NewServeMux()
-		metricsMux.HandleFunc("/metrics", health)
-		http.ListenAndServe("0.0.0.0:8081", metricsMux)
-	}()
-
+	/*
+		go func() {
+			fmt.Println("监听8081端口")
+			metricsMux := http.NewServeMux()
+			metricsMux.HandleFunc("/metrics", health)
+			http.ListenAndServe("0.0.0.0:8081", metricsMux)
+		}()
+	*/
 	select {}
 }
 
